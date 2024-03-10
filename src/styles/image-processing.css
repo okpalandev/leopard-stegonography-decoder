@@ -1,0 +1,15 @@
+#image-processing {
+    border: 2px dashed #ccc;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+#image-processing img {
+    max-width: 100%;
+    max-height: 100%;
+}
+

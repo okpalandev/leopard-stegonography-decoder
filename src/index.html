@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biom | Steganography Image Encoder/Decoder</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="biom"></canvas>
+        <label for="imageInput">Select an Image:</label>
+        <input type="file" id="imageInput" title="Select an image">
+        <textarea id="messageInput" placeholder="Enter your message"></textarea>
+        <br>
+        <label for="slider">Slider:</label>
+        <input type="range" id="slider" min="0" max="100" value="0" title="Slider">
+        <br>
+        <button id="encode">Encode</button>
+        <button id="decode">Decode</button>
+        <button id="hide">Hide Message</button>
+        <button id="show">Show Binary Data</button>
+        <br>
+        <div id="message"></div>
+        <button id="reset">Reset</button>
+    </div>
+    <script type="module" src="main.js" defer></script>
+</body>
+</html>
