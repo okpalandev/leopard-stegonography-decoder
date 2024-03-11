@@ -29,7 +29,7 @@ function applySepiaFilter(img) {
             sepia[i + 2] = avg; // Blue
         }
     }
-
+    
     filterCtx.putImageData(sepiaData, 0, 0, 0, 0, filterCanvas.width, filterCanvas.height);
 }
 
@@ -57,7 +57,7 @@ filterCanvas.addEventListener('mousedown', updateSepiaFilter);
 
 // Load the image and draw the filter
 const img = new Image();
-img.src = './assets/leopard.png'; 
+img.src = './assets/leopard_encoded.png'; 
 drawFilter(img);
 
 
