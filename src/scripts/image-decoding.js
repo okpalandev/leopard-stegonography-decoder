@@ -46,6 +46,7 @@ const handleFile = (file) => {
 const drawImageOnCanvas = (image) => {
     dropCtx.clearRect(0, 0, dropArea.width, dropArea.height);
     dropCtx.drawImage(image, 0, 0, dropArea.width, dropArea.height);
+    
 };
 
 dropArea.addEventListener('drop', handleDrop);
@@ -59,14 +60,14 @@ dropArea.addEventListener('mousemove', (e) => {
         const imageURL = URL.createObjectURL(file);
         const image = new Image();
         image.src = imageURL;
-
+        
         image.onload = () => {
             drawImageOnCanvas(image);
             URL.revokeObjectURL(imageURL); // Free up memory
         };
     }
 });
-
+    
 // Add mouseout event listener to prevent image clearing
 dropArea.addEventListener('mouseout', (e) => {
     // Only prevent clearing if an image is loaded

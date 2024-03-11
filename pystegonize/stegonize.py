@@ -1,8 +1,7 @@
-import random
 from string import ascii_lowercase, ascii_uppercase
 from PIL import Image
 import argparse
-
+    
 class CrypticStateMachine:
     def __init__(self):
         self.states = [chr(65 + i) for i in range(26)] # Generate 26 states from A to Z
@@ -67,18 +66,12 @@ class Steganography:
         if len(binary_message) > width * height * len(img.getbands()):
             raise ValueError("Message is too long to hide in the image")
 
-        # Counter for the bits of the message
+        # Embed the message into the image in a controlled manner
+        embedded_pixels = list(img.getdata())
         bit_count = 0
 
-        # Get pixel data
-        pixels = list(img.getdata())
-
-        # Shuffle the message within the image data
-        random.seed(42)  # Seed for reproducibility
-        random.shuffle(pixels)
-
         # Iterate over each pixel
-        for i, pixel in enumerate(pixels):
+        for i, pixel in enumerate(embedded_pixels):
             # Convert the pixel to a list so it's mutable
             pixel = list(pixel)
 
@@ -89,15 +82,42 @@ class Steganography:
                     bit_count += 1
 
             # Update the pixel data
-            pixels[i] = tuple(pixel)
+            embedded_pixels[i] = tuple(pixel)
 
         # Put the modified pixels back into the image
-        img.putdata(pixels)
+        img.putdata(embedded_pixels)
 
         # Save the modified image to the output path
         output_file = self.output_path if self.output_path else "encoded_image.png"
         img.save(output_file)
+        
+    def set_output_path(self, output_path):
+        self.output_path = output_path
 
+    @staticmethod
+    def reveal_message(encoded_image_path):
+        # Open the encoded image
+        img = Image.open(encoded_image_path)
+
+        # Get pixel data
+        pixels = list(img.getdata())
+
+        # Variable to store the extracted binary message
+        binary_message = ""
+
+        # Iterate over each pixel
+        for pixel in pixels:
+            # Extract the least significant bit from each color channel
+            for value in pixel:
+                binary_message += str(value & 1)
+
+        # Convert binary message to ASCII
+        message = ""
+        for i in range(0, len(binary_message), 8):
+            byte = binary_message[i:i+8]
+            message += chr(int(byte, 2))
+
+        return message
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Hide a message within an image.")
@@ -112,6 +132,4 @@ if __name__ == "__main__":
     steganography.hide_message(args.image, args.message)
     print("Message hidden successfully")
 
-    # Reveal the message
-    encoded_image_path = args.output if args.output else "encoded_image.png"
-    message = Steganography.reveal_message(encoded_image_path)
+ 

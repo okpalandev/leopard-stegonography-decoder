@@ -14,19 +14,14 @@
     function drawSlider() {
         // Clear the area where the slider will be drawn
         ctx.clearRect(slider.x - slider.height / 2, 0, slider.width + slider.height, canvas.height);
-    
-     
         // Draw track
         ctx.fillStyle = '#ccc';
         ctx.fillRect(slider.x, slider.y - slider.height / 2, slider.width, slider.height);
-    
         // Draw slider
         ctx.fillStyle = '#007bff';
         ctx.fillRect(slider.x + slider.trackerPosition * slider.width, slider.y - slider.height / 2, slider.height, slider.height);
-    
-
         // Reset global composite operation to default
-            
+        ctx.globalCompositeOperation = 'source-over';
     }
     
     function updateTrackerPosition(x) {
